@@ -30,7 +30,8 @@ public class PurchaseOperationTest {
     void testNegativePurchaseOperation_notOk() {
         FruitTransaction fruitTransaction = new FruitTransaction(
                 FruitTransaction.Operation.PURCHASE, "apple", -10);
-        assertThrows(IllegalArgumentException.class, () -> purchaseOperation.performOperation(fruitTransaction));
+        assertThrows(IllegalArgumentException.class,
+                () -> purchaseOperation.performOperation(fruitTransaction));
     }
 
     @Test

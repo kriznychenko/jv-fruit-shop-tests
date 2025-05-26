@@ -24,7 +24,8 @@ public class ReturnOperationTest {
     void testNegativeReturnOperation_notOk() {
         FruitTransaction fruitTransaction = new FruitTransaction(
                 FruitTransaction.Operation.RETURN, "apple", -100);
-        assertThrows(IllegalArgumentException.class, () -> returnOperation.performOperation(fruitTransaction));
+        assertThrows(IllegalArgumentException.class,
+                () -> returnOperation.performOperation(fruitTransaction));
     }
 
     @Test

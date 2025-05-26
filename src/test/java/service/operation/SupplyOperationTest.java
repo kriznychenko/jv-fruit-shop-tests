@@ -24,7 +24,8 @@ public class SupplyOperationTest {
     void testNegativeSupplyOperation_notOk() {
         FruitTransaction fruitTransaction = new FruitTransaction(
                 FruitTransaction.Operation.SUPPLY, "apple", -39);
-        assertThrows(IllegalArgumentException.class, () -> supplyOperation.performOperation(fruitTransaction));
+        assertThrows(IllegalArgumentException.class,
+                () -> supplyOperation.performOperation(fruitTransaction));
     }
 
     @Test

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
-import model.FruitTransaction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +23,8 @@ public class FileReaderImplTest {
 
     @Test
     public void readValidFile_ok() {
-        List<String> lines = Arrays.asList(
+        List<String> expected = Arrays.asList(
+                "type,fruit,quantity",
                 "b,banana,20",
                 "b,apple,100",
                 "s,banana,100",
@@ -35,32 +35,8 @@ public class FileReaderImplTest {
                 "s,banana,50"
         );
 
-        List<FruitTransaction> expected = Arrays.asList(
-                new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 20),
-                new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100),
-                new FruitTransaction(FruitTransaction.Operation.SUPPLY, "banana", 100),
-                new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 13),
-                new FruitTransaction(FruitTransaction.Operation.RETURN, "apple", 10),
-                new FruitTransaction(FruitTransaction.Operation.PURCHASE, "apple", 20),
-                new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 5),
-                new FruitTransaction(FruitTransaction.Operation.SUPPLY, "banana", 50)
-        );
-
-        assertEquals(expected.size(), lines.size(),
-                "Number of lines in file doesn't match expected");
-        for (int i = 0; i < expected.size(); i++) {
-            FruitTransaction expectedTransaction = expected.get(i);
-            String[] line = lines.get(i).split(",");
-
-            FruitTransaction actualTransaction = new FruitTransaction(
-                    FruitTransaction.Operation.getOperationFromCode(line[0]),
-                    line[1],
-                    Integer.parseInt(line[2])
-            );
-
-            assertEquals(expectedTransaction, actualTransaction,
-                    "Transaction at index " + i + " does not match expected.");
-        }
+        List<String> actual = fileReader.read(VALID_FILE);
+        assertEquals(expected, actual);
     }
 
     @Test

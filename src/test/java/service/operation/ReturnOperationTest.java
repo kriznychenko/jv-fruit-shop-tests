@@ -9,22 +9,22 @@ import model.FruitTransaction;
 import org.junit.jupiter.api.Test;
 
 public class ReturnOperationTest {
-    private final OperationHandler operationHandler = new ReturnOperation();
+    private final OperationHandler returnOperation = new ReturnOperation();
 
     @Test
     void testReturnOperation_ok() {
         Storage.add("strawberry", 5);
         FruitTransaction fruitTransaction = new FruitTransaction(
                 FruitTransaction.Operation.RETURN, "strawberry", 30);
-        assertDoesNotThrow(() -> operationHandler.performOperation(fruitTransaction));
+        assertDoesNotThrow(() -> returnOperation.performOperation(fruitTransaction));
         assertEquals(35, Storage.getAmount("strawberry"));
     }
 
     @Test
     void testNegativeReturnOperation_notOk() {
         FruitTransaction fruitTransaction = new FruitTransaction(
-                FruitTransaction.Operation.PURCHASE, "apple", 10);
-        assertThrows(IllegalArgumentException.class, () -> fruitTransaction.setQuantity(-10));
+                FruitTransaction.Operation.RETURN, "apple", -100);
+        assertThrows(IllegalArgumentException.class, () -> returnOperation.performOperation(fruitTransaction));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class ReturnOperationTest {
         Storage.add("apple", 0);
         FruitTransaction fruitTransaction = new FruitTransaction(
                 FruitTransaction.Operation.RETURN, "apple", 0);
-        assertDoesNotThrow(() -> operationHandler.performOperation(fruitTransaction));
+        assertDoesNotThrow(() -> returnOperation.performOperation(fruitTransaction));
         assertEquals(0, Storage.getAmount("apple"));
     }
 }

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class PurchaseOperationTest {
-    private final OperationHandler operationHandler = new PurchaseOperation();
+    private final OperationHandler purchaseOperation = new PurchaseOperation();
 
     @AfterEach
     void cleanUp() {
@@ -22,15 +22,15 @@ public class PurchaseOperationTest {
         Storage.add("orange", 50);
         FruitTransaction fruitTransaction = new FruitTransaction(
                 FruitTransaction.Operation.PURCHASE, "orange", 20);
-        assertDoesNotThrow(() -> operationHandler.performOperation(fruitTransaction));
+        assertDoesNotThrow(() -> purchaseOperation.performOperation(fruitTransaction));
         assertEquals(30, Storage.getAmount("orange"));
     }
 
     @Test
     void testNegativePurchaseOperation_notOk() {
         FruitTransaction fruitTransaction = new FruitTransaction(
-                FruitTransaction.Operation.PURCHASE, "apple", 10);
-        assertThrows(IllegalArgumentException.class, () -> fruitTransaction.setQuantity(-10));
+                FruitTransaction.Operation.PURCHASE, "apple", -10);
+        assertThrows(IllegalArgumentException.class, () -> purchaseOperation.performOperation(fruitTransaction));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PurchaseOperationTest {
                 FruitTransaction.Operation.PURCHASE, "apple", 10);
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> operationHandler.performOperation(fruitTransaction));
+                () -> purchaseOperation.performOperation(fruitTransaction));
         assertEquals("Not enough apple in the store.", ex.getMessage());
     }
 }

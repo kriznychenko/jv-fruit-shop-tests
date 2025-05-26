@@ -18,14 +18,12 @@ public class ReportGeneratorImplTest {
         Storage.fruits.put("apple", 30);
         Storage.fruits.put("orange", 15);
 
-        String header = "fruit,amount";
-        StringBuilder builder = new StringBuilder();
-        builder.append(header).append(System.lineSeparator())
-                .append("apple,30").append(System.lineSeparator())
-                .append("orange,15").append(System.lineSeparator());
+        String expected = "fruit,amount" + System.lineSeparator()
+                + "apple,30" + System.lineSeparator()
+                + "orange,15" + System.lineSeparator();
 
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
-        assertEquals(builder.toString(), reportGenerator.getReport());
+        assertEquals(expected, reportGenerator.getReport());
     }
 
     @Test
